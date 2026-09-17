@@ -1,0 +1,63 @@
+@startuml
+skinparam ConditionEndStyle hline
+
+|Student|
+
+start
+
+:Enter Credentials;
+
+|Registration System|
+
+if (Valid Login?) then (no)
+
+  :Show Error Message;
+
+  |Student|
+
+  :Browse/Search Course Catalogue;
+
+  detach
+
+else (yes)
+
+  |Student|
+
+  repeat
+    :Select Desired Course;
+
+    |Registration System|
+
+    if (Seats Available?) then (yes)
+
+      :Add Course to Cart/Pending List;
+
+      :Course Registration;
+
+      |Database|
+
+      :Reserve Seat;
+
+      :Update Course Roster;
+
+      |Registration System|
+
+      :Process Payment;
+
+      :Display Success Confirmation;
+
+    else (no)
+
+      |Registration System|
+
+      :Show "Course Full" Notice;
+
+    endif
+
+    |Student|
+  repeat while (Try Another Course?) is (yes) not (no)
+
+  stop
+
+endif
+@enduml
