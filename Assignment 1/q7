@@ -1,0 +1,67 @@
+@startuml Hospital_Management_System_Level_1_DFD
+
+title Level-1 DFD - Hospital Management System
+
+left to right direction
+
+' External Entities
+rectangle "Patient" as Patient
+rectangle "Doctor" as Doctor
+rectangle "Receptionist" as Receptionist
+rectangle "Admin" as Admin
+
+' Processes
+circle "1.0\nPatient\nRegistration" as P1
+circle "2.0\nAppointment\nManagement" as P2
+circle "3.0\nTreatment &\nDiagnosis" as P3
+circle "4.0\nBilling &\nPayment" as P4
+circle "5.0\nReport\nManagement" as P5
+
+' Data Stores
+database "D1\nPatient Database" as D1
+database "D2\nAppointment Database" as D2
+database "D3\nMedical Records" as D3
+database "D4\nBilling Database" as D4
+
+' Patient flows
+Patient --> P1 : Registration Details
+P1 --> Patient : Registration ID
+P1 --> D1 : Store Patient Details
+
+Patient --> P2 : Appointment Request
+P2 --> Patient : Appointment Details
+P2 --> D2 : Store Appointment
+
+' Doctor flows
+Doctor --> P2 : Availability Details
+P2 --> Doctor : Appointment Schedule
+
+Doctor --> P3 : Diagnosis & Treatment
+P3 --> D3 : Store Medical Records
+P3 --> Doctor : Patient History
+
+' Patient and treatment
+Patient --> P3 : Medical Information
+P3 --> Patient : Treatment Details
+
+' Billing
+Patient --> P4 : Payment Details
+P4 --> D4 : Store Billing Details
+P4 --> Patient : Bill / Receipt
+
+' Reports
+Admin --> P5 : Report Request
+P5 --> D1 : Patient Data
+P5 --> D2 : Appointment Data
+P5 --> D3 : Medical Data
+P5 --> D4 : Billing Data
+P5 --> Admin : Reports
+
+' Receptionist
+Receptionist --> P1 : Patient Details
+P1 --> Receptionist : Registration Status
+
+Receptionist --> P2 : Appointment Details
+P2 --> Receptionist : Appointment Status
+
+@enduml
